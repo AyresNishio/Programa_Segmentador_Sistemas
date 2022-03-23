@@ -25,7 +25,7 @@ class Rede:
             # 6 - ligado ou desligado
         if(num_med != 0):
             self.nome_plano_med ='med'+ str(num_barras) + 'b' + str(num_med) + 'm.txt'
-            self.plano_med = np.loadtxt(self.nome_plano_med,dtype = 'i')
+            self.plano_med = np.loadtxt(self.nome_plano_med,dtype = 'i',delimiter=',')
             self.num_medidas = num_med 
         else: 
             self.nome_plano_med =''

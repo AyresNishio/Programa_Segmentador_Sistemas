@@ -199,3 +199,52 @@ def salva_txt_planomed(Rede):
     np.savetxt(nome_arquivo,Rede.plano_med,delimiter=' ',fmt = '%i')
 
     f.close()
+
+def complementar_plano_med(Rede,semente = 5):
+
+        seed(semente)
+
+        #inicializa plano de medição "cheio" com todas medidas desativadas
+        #Rede.plano_med = gera_plano_vazio(Rede.Y_barra,Rede.max_med)
+        #Rede.num_medidas = 0
+        Rede.observavel = False
+        
+
+        medidas_nao_sorteadas = [i for i in range(1,Rede.max_med+1)]
+
+        while(not Rede.observavel):
+            #TODO Diminuir esta parte
+            med_sorteada = sample(medidas_nao_sorteadas, 1)
+            medidas_nao_sorteadas = [barra for barra in medidas_nao_sorteadas if barra not in med_sorteada]
+
+            Rede.num_medidas += adiciona_medida(Rede.plano_med,med_sorteada[0])
+            
+            H = monta_Jacobiana(Rede.Y_barra,Rede.plano_med)
+            G = monta_matriz_de_Ganho(H)
+            Rede.observavel = teste_observabilidade(G,1.E-10)
+            
+        Rede.E = monta_matriz_de_Covariância(G,H)
+        return Rede.plano_med
+
+def completar_plano_UM_completa(Rede,semente = 5):
+
+    seed(semente)
+
+    Rede.observavel = False
+    redundancia_atual = 0
+
+    barras_nao_sorteadas = [i for i in range(1,Rede.num_barras+1)]
+
+    while(not Rede.observavel ):
+            #TODO Diminuir esta parte
+            barra_sorteada = sample(barras_nao_sorteadas, 1)
+            barras_nao_sorteadas = [barra for barra in barras_nao_sorteadas if barra not in barra_sorteada]
+
+            Rede.num_medidas += adiciona_UM(Rede.plano_med,barra_sorteada[0])
+            
+            H = monta_Jacobiana(Rede.Y_barra,Rede.plano_med)
+            G = monta_matriz_de_Ganho(H)
+            Rede.observavel = teste_observabilidade(G,1.E-10)
+
+    Rede.E = monta_matriz_de_Covariância(G,H)    
+    return Rede.plano_med

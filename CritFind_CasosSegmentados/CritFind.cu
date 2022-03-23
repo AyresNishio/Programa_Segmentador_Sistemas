@@ -31,7 +31,7 @@ string nomeSaida = "Saida.csv";
 // int nbar;
 // int nmed;
 // int kmax;
-int solSize = 1000;
+int solSize = 10000;
 
 //Estutura da matriz de resultados de combinações (Cn)
 string nomeCnfile = "combs1000em5.txt";
@@ -79,9 +79,9 @@ __global__ void scanSum( int *g_idata, int n);
 int main()
 {
     
-    int nbar = 118;
+    //int nbar = 300;
     int nmed;
-    int kmax = 5;
+    int kmax = 4;
 
     // Variaveis iniciais
     const long long int wave_size = (int)pow(2, 20);

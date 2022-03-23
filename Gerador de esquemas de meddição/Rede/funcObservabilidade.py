@@ -63,6 +63,7 @@ def monta_matriz_de_Covariância(G,H):
         aux = np.matmul(H,np.linalg.inv(G))
         E= I - np.matmul(aux,np.transpose(H))
     else :
+        print('não observavel')
         E=np.zeros(H.shape[0])
     return E  
 
