@@ -3,7 +3,7 @@ import numpy as np
 
 from Rede.Rede import *
 
-from funcGrafo import*
+from Grafo.funcGrafo import*
 
 from Segmentador.funcSegmentaRede import*
 from Segmentador.funcSegSaida import*
@@ -12,8 +12,8 @@ from Segmentador.funcReagrupar import *
 import os
 import shutil
 
-num_barras = 300
-redun_min = .2
+num_barras = 118
+redun_min = .60
 nome_top = 'ieee-'+str(num_barras) + '-bus.txt'
 
 rede = Rede(num_barras)
@@ -42,15 +42,11 @@ G = segmentar_rede_em_n_grupos_m_vezes(G,n_grupos,n_iter)
 exibir_grafo_de_grupos(G, rede.coordenadas)
 salva_grupos_em_txt(G,n_grupos)
 
-
-salva_Caso(rede)
-
-
 grupos     = cria_lista_de_grupos(G,n_grupos)
 sub_planos = salva_sub_plano_med(rede.plano_med,grupos)
 salva_sub_covariancia(rede.E,sub_planos)
 
-
+# Arruma diretórios
 dir_origem = os.path.dirname(__file__)
 caso= f'Caso{rede.num_barras}barras{rede.num_medidas}medidas'
 dir_destino = dir_origem + '/' +caso

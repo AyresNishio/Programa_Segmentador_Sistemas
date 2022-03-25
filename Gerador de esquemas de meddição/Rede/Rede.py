@@ -31,8 +31,6 @@ class Rede:
             self.nome_plano_med =''
             self.plano_med = []
             self.num_medidas = num_med    
-
-
         
 def construir_topologia(num_barras):
 
