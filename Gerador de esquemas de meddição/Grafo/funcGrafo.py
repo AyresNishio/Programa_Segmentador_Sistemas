@@ -202,16 +202,12 @@ def monta_grafo_med_nodes(rede):
         for med in rede.plano_med:
             de   = med[1]
             para = med[2]
-            print(no,de,para)
+            #print(no,de,para)
             if(barra_med1 == de or barra_med1 == para):
                 if(no != med[0]): Grafo.add_edge(no,med[0])
             if(tipo == 2):
                 if (rede.Y_barra[barra_med1-1][de-1]==1 or rede.Y_barra[barra_med1-1][para-1]==1):
                     if(no != med[0]): Grafo.add_edge(no,med[0])    
-            
-        #    if(tipo == 1):
-        #        Grafo.add_edge(no,med[0])
-        #        print('flu')
     return Grafo
 
 def exibir_grafo(Grafo,coordenadas):
@@ -221,6 +217,6 @@ def exibir_grafo(Grafo,coordenadas):
     nx.draw_networkx_nodes(Grafo, coordenadas, node_size = 300, node_color='b', alpha=1, node_shape='o')
     nx.draw_networkx_edges(Grafo, coordenadas, edge_color = 'black')
     
-
+    plt.title(f'Grafo {len(Grafo.nodes)} barras')
     plt.show()
     
