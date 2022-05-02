@@ -8,9 +8,12 @@ from Segmentador.funcSegmentaRede import*
 from Segmentador.funcSegSaida import*
 from Segmentador.funcReagrupar import *
 
+from Cluster.Cluster import *
+
 import os
 import shutil
 
+n_grupos = 3
 num_barras = 118
 redun_min = .60
 nome_top = 'ieee-'+str(num_barras) + '-bus.txt'
@@ -21,7 +24,10 @@ barras_preferidas = []
 barras_excluidas = []
 
 def save_Casos_grupos(grupos,rede):
-    np.savetxt(f'Grupos{rede.num_barras}b_{rede.num_medidas}m.txt',grupos,fmt='%i')
+    nome_arquivo=f'Grupos{rede.num_barras}b_{rede.num_medidas}m.txt'
+    with open(nome_arquivo,'a') as f:
+        for grupo in grupos:
+            np.savetxt(f,grupo, fmt = '%i')
     i = 1
     for grupo in grupos:
         nmedg = [len(grupo)]
@@ -58,19 +64,16 @@ G=montar_grafo_da_topologia(rede)
 exibir_grafo_de_peso_de_medidas(G,rede.coordenadas)
 rede.plano_med=remove_medidas_desativaddas(rede)
 Gmed= monta_grafo_med_nodes(rede)
-coordenadas = nx.circular_layout(Gmed)
-# for y in range(2):
-#             for x in range(4):
-#                 chave = y*4+x+1
-#                 coordenadas[chave] = np.array([x,y])
+#coordenadas = nx.circular_layout(Gmed)
+coordenadas = nx.fruchterman_reingold_layout(Gmed)
+
 exibir_grafo(Gmed,coordenadas)
 
-segmentar_rede_em_n_grupos_m_vezes(Gmed,2,5)
-
-exibir_grafo_de_grupos(Gmed,coordenadas)
+#segmentar_rede_em_n_grupos_m_vezes(Gmed,2,5)
+clusteriza_agglomerative(Gmed,coordenadas,n_grupos)
 
 #salva_grupos_em_txt(Gmed,2)
-grupos =cria_lista_de_grupos(Gmed,2)
+grupos =cria_lista_de_grupos(Gmed,n_grupos)
 save_Casos_grupos(grupos,rede)
 
 dir_origem = os.path.dirname(__file__)

@@ -217,6 +217,6 @@ def exibir_grafo(Grafo,coordenadas):
     nx.draw_networkx_nodes(Grafo, coordenadas, node_size = 300, node_color='b', alpha=1, node_shape='o')
     nx.draw_networkx_edges(Grafo, coordenadas, edge_color = 'black')
     
-    plt.title(f'Grafo {len(Grafo.nodes)} barras')
+    plt.title(f'Grafo {len(Grafo.nodes)} medidas')
     plt.show()
     
