@@ -104,6 +104,73 @@ def construir_topologia(num_barras):
         29: np.array([10,  0]),
         30: np.array([12,  2])} 
 
+    if num_barras == 57:
+        arquivo_topologia = os.path.join(nome_do_diretorio, "ieee-57-bus.txt")
+        Y_barra = np.loadtxt(arquivo_topologia, dtype='i',delimiter=",")
+        
+        # for y in range(6):
+        #     for x in range(10):
+        #         chave = y*10+x+1
+        #         if(chave<=57): coordenadas[chave] = np.array([x,y])
+        coordenadas = {
+        1 :np.array([13,- 0]),
+        2 :np.array([4 ,- 0]),
+        3 :np.array([3 ,- 1]),
+        4 :np.array([3 ,- 3]),
+        5 :np.array([4 ,- 4]),
+        6 :np.array([1 ,- 8]),
+        7 :np.array([2 ,-14]),
+        8 :np.array([5 ,-20]),
+        9 :np.array([9 ,-20]),
+        10:np.array([16,-16]),
+        11:np.array([11,-17]),
+        12:np.array([15,- 4]),
+        13:np.array([13,- 5]),
+        14:np.array([9 ,- 3]),        
+        15:np.array([8 ,- 1]),
+        16:np.array([14,- 2]),
+        17:np.array([15,- 1]),
+        18:np.array([3 ,- 5]),
+        19:np.array([5 ,- 6]),
+        20:np.array([7 ,- 7]),
+        21:np.array([7 ,- 8]),
+        22:np.array([8 ,- 9]),
+        23:np.array([7 ,-10]),
+        24:np.array([7 ,-11]),
+        25:np.array([7 ,-13]),
+        26:np.array([4 ,- 8]),
+        27:np.array([4 ,- 9]),
+        28:np.array([4 ,-10]),
+        29:np.array([4 ,-11]),
+        30:np.array([9 ,-15]),
+        31:np.array([10,-16]),
+        32:np.array([12,-16]),
+        33:np.array([13,-15]),
+        34:np.array([11,-14]),
+        35:np.array([10,-13]),
+        36:np.array([10,-12]),
+        37:np.array([9 ,- 8]),
+        38:np.array([9 ,- 6]),
+        39:np.array([10,- 9]),
+        40:np.array([13,-12]),
+        41:np.array([14,-19]),
+        42:np.array([14,-13]),
+        43:np.array([13,-18]),
+        44:np.array([7 ,- 4]),
+        45:np.array([7 ,- 3]),
+        46:np.array([9 ,- 4]),
+        47:np.array([11,- 8]),
+        48:np.array([10,- 7]),
+        49:np.array([12,- 5]),
+        50:np.array([15,-14]),
+        51:np.array([15,-17]),
+        52:np.array([5 ,-16]),
+        53:np.array([6 ,-17]),
+        54:np.array([8 ,-18]),
+        55:np.array([9 ,-19]),
+        56:np.array([14,-11]),
+        57:np.array([12,-10]),  }
+
     if num_barras == 118:
         arquivo_topologia = os.path.join(nome_do_diretorio, "ieee-118-bus.txt")
         Y_barra = np.loadtxt(arquivo_topologia, dtype='i',delimiter=",")
@@ -226,7 +293,7 @@ def construir_topologia(num_barras):
         116: np.array([475, -170]),
         117: np.array([200, 0]),
         118: np.array([370, -270])} 
-    if (num_barras == 300):
+    if num_barras == 300:
         arquivo_topologia = os.path.join(nome_do_diretorio, "ieee-300-bus.txt")
         Y_barra = np.loadtxt(arquivo_topologia, dtype='i',delimiter=",")
         coordenadas = {0:np.array([0,0])}

@@ -21,7 +21,7 @@ nome_top = 'ieee-'+str(num_barras) + '-bus.txt'
 rede = Rede(num_barras)
 
 barras_preferidas = []
-barras_excluidas = []
+barras_excluidas = [113, 17,15, 20, 23, 72, 39, 40, 33, 35, 34, 43, 38, 70, 75, 66, 116, 47, 45, 48, 50, 53, 56, 59]
 
 def save_Casos_grupos(grupos,rede):
     nome_arquivo=f'Grupos{rede.num_barras}b_{rede.num_medidas}m.txt'
@@ -70,7 +70,8 @@ coordenadas = nx.fruchterman_reingold_layout(Gmed)
 exibir_grafo(Gmed,coordenadas)
 
 #segmentar_rede_em_n_grupos_m_vezes(Gmed,2,5)
-clusteriza_agglomerative(Gmed,coordenadas,n_grupos)
+#clusteriza_agglomerative(Gmed,coordenadas,n_grupos)
+clusteriza_spectral(Gmed,coordenadas,n_grupos)
 
 #salva_grupos_em_txt(Gmed,2)
 grupos =cria_lista_de_grupos(Gmed,n_grupos)
@@ -85,6 +86,6 @@ arquivos_na_pasta = os.listdir(dir_origem)
 for arquivo in arquivos_na_pasta:
     if arquivo.endswith('.txt') or arquivo.endswith('.png'):
         shutil.move(os.path.join(dir_origem,arquivo), os.path.join(dir_destino,dir_destino))
-
+        
 
 print('fim')

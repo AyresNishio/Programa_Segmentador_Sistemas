@@ -12,8 +12,8 @@ from Segmentador.funcReagrupar import *
 import os
 import shutil
 
-num_barras = 6
-redun_min = .60
+num_barras = 57
+redun_min = .30
 nome_top = 'ieee-'+str(num_barras) + '-bus.txt'
 
 rede = Rede(num_barras)
@@ -24,7 +24,8 @@ barras_excluidas = []
 #barras_excluidas = [2,3,4,6,7,8,11, 117,14, 13, 33, 16, 18,19, 20, 29, 31, 10, 27, 13, 114,26, 25,22 ]
 
 
-gera_plano_concentrado(rede,redun_min, barras_preferidas,barras_excluidas)
+#gera_plano_concentrado(rede,redun_min, barras_preferidas,barras_excluidas)
+rede=gera_plano_UM_completa(rede,redun_min,5)
 print(calcula_redundancia(rede.num_medidas,rede.num_barras,rede.max_med))
 
 # G = montar_multigrafo_do_plano_medidas(rede)
