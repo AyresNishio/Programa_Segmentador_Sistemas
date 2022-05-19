@@ -128,8 +128,14 @@ def montar_grafo_criticalidades(Ckset):
 def exibir_grafo_de_criticalidades(Grafo,Criticalidades,coordenadas):
     numeros_das_barras = {x: x for x in Grafo.nodes} 
 
+    #Cria grupo com elementos únicos
+    grupos = set(nx.get_node_attributes(Grafo,'grupo').values())
+    mapping = dict(zip(sorted(grupos),count()))
+    #Cria Listas de Cores para cada grupo
+    cores = [mapping[Grafo.nodes[n]['grupo']] for n in Grafo.nodes]
+
     nx.draw_networkx_labels(Grafo, coordenadas, numeros_das_barras, font_size=11, font_color='w', font_family = "Tahoma", font_weight = "normal")
-    nx.draw_networkx_nodes(Grafo, coordenadas, node_size = 300, node_color='black', alpha=1, node_shape='o')
+    nx.draw_networkx_nodes(Grafo, coordenadas, node_size = 300, node_color=cores, alpha=1, node_shape='o')
     nx.draw_networkx_edges(Grafo, coordenadas, edge_color = 'black')
 
     

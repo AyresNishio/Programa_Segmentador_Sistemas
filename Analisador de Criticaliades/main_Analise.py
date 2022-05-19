@@ -2,6 +2,17 @@ from Criticalidades import Criticalidades
 from Rede.Rede import Rede 
 from funcGrafo import *
 
+def ler_grupo(g):
+    nome_arquivo =  f'Grupo{g}.txt'
+    grupo = []
+    with open(nome_arquivo) as arquivo:
+        for linha in arquivo:
+            grupo.append(int(linha.replace('\n',''))) 
+    return set(grupo)
+
+grupo1=ler_grupo(1)
+grupo2=ler_grupo(2)
+grupo3=ler_grupo(3)
 
 med_plan = Criticalidades('Caso118b333m.csv')
 med_plan1= Criticalidades('medplan1_112m.csv')
@@ -23,8 +34,15 @@ rede = Rede(118)
 
 G = montar_grafo_da_rede(rede)
 
-G_crit = montar_grafo_criticalidades(med_plan.C4 - med_plan1.C4 -med_plan2.C4 -med_plan3.C4)
+G_crit = montar_grafo_criticalidades(med_plan.C5 - med_plan1.C5 -med_plan2.C5 -med_plan3.C5)
 
+for node in G:
+    if node in grupo1:
+        G.nodes[node]['grupo'] = 1
+    if node in grupo2:  
+        G.nodes[node]['grupo'] = 2    
+    if node in grupo3:  
+        G.nodes[node]['grupo'] = 3    
 exibir_grafo_de_criticalidades(G,G_crit,rede.coordenadas)
 
 print()
