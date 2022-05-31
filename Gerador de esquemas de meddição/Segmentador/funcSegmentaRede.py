@@ -23,9 +23,9 @@ def segmentar_rede_em_n_grupos_m_vezes(G,n_grupos,vezes):
             melhores_pesos =pesos
     print(f'Melhor caso selecionado:{menor_dif}')
     print(f'Pesos por grupos:{melhores_pesos}')
-    G.dif = menor_dif
-    G.pesos = melhores_pesos
-    return(melhor_G)
+    melhor_G.dif = menor_dif
+    melhor_G.pesos = melhores_pesos
+    return melhor_G
 
 def segmentar_rede(G,n_grupos):
     
@@ -70,8 +70,9 @@ def agrupar_n_barras(G, folhas):
     for barra in G.nodes():
         folha_proxima = -1
         menor_distancia = nx.diameter(G)+1
+        lista_de_distancias = nx.shortest_path_length(G,barra)
         for folha in folhas:
-            distancia = nx.shortest_path_length(G,folha,barra)
+            distancia = lista_de_distancias[folha]
             if(distancia < menor_distancia):
                 folha_proxima = folha
                 menor_distancia = distancia

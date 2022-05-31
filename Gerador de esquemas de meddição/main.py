@@ -12,8 +12,8 @@ from Segmentador.funcReagrupar import *
 import os
 import shutil
 
-num_barras = 57
-redun_min = .30
+num_barras = 300
+redun_min = .60
 nome_top = 'ieee-'+str(num_barras) + '-bus.txt'
 
 rede = Rede(num_barras)

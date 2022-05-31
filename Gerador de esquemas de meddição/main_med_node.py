@@ -69,16 +69,16 @@ coordenadas = nx.fruchterman_reingold_layout(Gmed)
 
 exibir_grafo(Gmed,coordenadas)
 
-#segmentar_rede_em_n_grupos_m_vezes(Gmed,2,5)
+Gmed=segmentar_rede_em_n_grupos_m_vezes(Gmed,3,5)
 #clusteriza_agglomerative(Gmed,coordenadas,n_grupos)
-clusteriza_spectral(Gmed,coordenadas,n_grupos)
-
+#clusteriza_spectral(Gmed,coordenadas,n_grupos)
+exibir_grafo_de_grupos(Gmed,coordenadas)
 #salva_grupos_em_txt(Gmed,2)
 grupos =cria_lista_de_grupos(Gmed,n_grupos)
 save_Casos_grupos(grupos,rede)
 
 dir_origem = os.path.dirname(__file__)
-caso= f'Caso{rede.num_barras}barras{rede.num_medidas}medidas'
+caso= f'med_nodes{rede.num_barras}barras{rede.num_medidas}medidas'
 dir_destino = dir_origem + '/' +caso
 if not os.path.exists(dir_destino):
     os.makedirs(dir_destino)
