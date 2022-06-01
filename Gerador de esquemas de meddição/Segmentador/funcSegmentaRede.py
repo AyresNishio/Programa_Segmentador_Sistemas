@@ -67,17 +67,14 @@ def listar_folhas(T):
     return lista_de_folhas
 
 def agrupar_n_barras(G, folhas):
-    for barra in G.nodes():
-        folha_proxima = -1
-        menor_distancia = nx.diameter(G)+1
-        lista_de_distancias = nx.shortest_path_length(G,barra)
-        for folha in folhas:
-            distancia = lista_de_distancias[folha]
-            if(distancia < menor_distancia):
-                folha_proxima = folha
-                menor_distancia = distancia
-
-        G.nodes[barra]['grupo'] = folhas.index(folha_proxima)
+    menor_distancia = [Inf]*len(G.nodes)
+    for folha in folhas:
+        lista_de_distancias = nx.shortest_path_length(G,folha)
+        for barra in G.nodes:
+            if lista_de_distancias[barra]<menor_distancia[barra-1]:
+                    G.nodes[barra]['grupo'] = folhas.index(folha)
+                    menor_distancia[barra-1] = lista_de_distancias[barra]
+        
     return G
 
 

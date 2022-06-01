@@ -12,7 +12,7 @@ from Segmentador.funcReagrupar import *
 import os
 import shutil
 
-num_barras = 300
+num_barras = 118
 redun_min = .60
 nome_top = 'ieee-'+str(num_barras) + '-bus.txt'
 
