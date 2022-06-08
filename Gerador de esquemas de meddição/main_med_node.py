@@ -1,3 +1,4 @@
+import re
 import numpy as np
 
 from Rede.Rede import *
@@ -10,6 +11,8 @@ from Segmentador.funcReagrupar import *
 
 from Cluster.Cluster import *
 
+from datetime import datetime
+
 import os
 import shutil
 
@@ -21,7 +24,9 @@ nome_top = 'ieee-'+str(num_barras) + '-bus.txt'
 rede = Rede(num_barras)
 
 barras_preferidas = []
-barras_excluidas = [113, 17,15, 20, 23, 72, 39, 40, 33, 35, 34, 43, 38, 70, 75, 66, 116, 47, 45, 48, 50, 53, 56, 59]
+#barras_excluidas = []
+barras_excluidas = [2,3,4,6,7,8,11, 117,14, 13, 33, 16, 18,19, 20, 29, 31, 10, 27, 13, 114,26, 25,22 ]
+#barras_excluidas = [113, 17,15, 20, 23, 72, 39, 40, 33, 35, 34, 43, 38, 70, 75, 66, 116, 47, 45, 48, 50, 53, 56, 59]
 
 def save_Casos_grupos(grupos,rede):
     nome_arquivo=f'Grupos{rede.num_barras}b_{rede.num_medidas}m.txt'
@@ -78,7 +83,9 @@ grupos =cria_lista_de_grupos(Gmed,n_grupos)
 save_Casos_grupos(grupos,rede)
 
 dir_origem = os.path.dirname(__file__)
-caso= f'med_nodes{rede.num_barras}barras{rede.num_medidas}medidas'
+data_e_hora_atuais = datetime.now()
+data_e_hora_em_texto = data_e_hora_atuais.strftime('%d-%m-%H-%M')
+caso= f'med_nodes{rede.num_barras}bar{rede.num_medidas}med{redun_min}red{data_e_hora_em_texto}'
 dir_destino = dir_origem + '/' +caso
 if not os.path.exists(dir_destino):
     os.makedirs(dir_destino)

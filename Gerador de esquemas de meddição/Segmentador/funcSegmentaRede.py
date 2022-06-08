@@ -10,6 +10,7 @@ semente = 5
 def segmentar_rede_em_n_grupos_m_vezes(G,n_grupos,vezes):
     menor_dif = Inf
     print('Inicia Segmentação')
+    #melhor_G=nx.Graph()
     for i in range(vezes):
         global semente 
         rd.seed(semente+i)
@@ -19,7 +20,7 @@ def segmentar_rede_em_n_grupos_m_vezes(G,n_grupos,vezes):
         print(f'[{pesos}] -> {dif_pesos}')
         if(dif_pesos<menor_dif):
             menor_dif = dif_pesos
-            melhor_G = G
+            melhor_G = G.copy()
             melhores_pesos =pesos
     print(f'Melhor caso selecionado:{menor_dif}')
     print(f'Pesos por grupos:{melhores_pesos}')
