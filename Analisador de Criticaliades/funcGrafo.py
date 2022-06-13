@@ -107,7 +107,7 @@ def montar_grafo_criticalidades(Ckset):
         meds = i.split(' ')[0:-2]
         for med in meds:
             if(med[0] == 'F'):
-                print('Medida de Fluxo')
+                #print('Medida de Fluxo')
                 med = str(med).replace('F','')
                 med = str(med).replace('(','')
                 med = str(med).replace(')','') 
@@ -115,7 +115,7 @@ def montar_grafo_criticalidades(Ckset):
                 med = [int(i) for i in med]
                 Grafo_criticalidades.add_edge(med[0],med[1],tipo ='F')
             elif(med[0] == 'I'):
-                print('Medida de Injeção')
+                #print('Medida de Injeção')
                 med = str(med).replace('I','')
                 med = str(med).replace('(','')
                 med = str(med).replace(')','')

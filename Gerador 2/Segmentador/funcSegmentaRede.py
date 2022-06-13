@@ -4,6 +4,8 @@ import random as rd
 
 from numpy import Inf
 
+from Grafo.funcGrafo import exibir_grafo_de_grupos
+
 semente = 5
 
 
@@ -33,11 +35,11 @@ def segmentar_rede(G,n_grupos):
     # Vertices de maior excentricidade são aqueles mais distântes do centro do grafo
     #Vertices precisam estar distântes entre si para o agrupamento
     folhas = identificar_n_folhas_distantes(G,n_grupos)
-
+    print(f'folhas: {folhas}')
     G = agrupar_n_barras(G,folhas)
-
+    exibir_grafo_de_grupos(G)
     G = balancear_grafo(G,n_grupos)
-
+    exibir_grafo_de_grupos(G)
     
     return G
 
@@ -80,17 +82,18 @@ def agrupar_n_barras(G, folhas):
 
 
 def balancear_grafo(G,n_grupos):
-
+    barras_escolhidas= []
     for i in range(100):
         global semente
         rd.seed(semente + i)
         pesos = calcular_pesos(G,n_grupos)
         
+        
         menor_grupo = pesos.index(min(pesos))
         
         #[numero da barra, grupo da barra]
-        barra_trocada,grupo_barra_trocada = escolher_barra_para_adicionar_ao_grupo(G,menor_grupo)
-        
+        barra_trocada,grupo_barra_trocada = escolher_barra_para_adicionar_ao_grupo(G,menor_grupo,barras_escolhidas)
+        barras_escolhidas.append(barra_trocada)
         Gnovo= G.copy()
         Gnovo.nodes[barra_trocada]['grupo'] = menor_grupo
 
@@ -100,7 +103,10 @@ def balancear_grafo(G,n_grupos):
         else: 
             viavel = False
 
-        if(viavel): G.nodes[barra_trocada]['grupo'] = menor_grupo
+        if(viavel):
+            print(f'Barra trocada {barra_trocada}->grupo {menor_grupo}')
+            G.nodes[barra_trocada]['grupo'] = menor_grupo
+            
     return G
 
 def calcular_pesos(G,n_grupos):
@@ -112,16 +118,16 @@ def calcular_pesos(G,n_grupos):
 
     return peso_grupo
 
-def escolher_barra_para_adicionar_ao_grupo(G,grupo):
+def escolher_barra_para_adicionar_ao_grupo(G,grupo,barras_trocadas):
     barras_de_fronteira = []
     for barra in G.nodes:
-        #fronteira = False
-        for vizinho in G.neighbors(barra):
-            if(G.nodes[barra]['grupo'] == grupo and G.nodes[vizinho]['grupo'] != G.nodes[barra]['grupo']): 
-                barras_de_fronteira.append([vizinho,G.nodes[vizinho]['grupo']])
+        #if (barra not in barras_trocadas):
+            for vizinho in G.neighbors(barra):
+                if(G.nodes[barra]['grupo'] == grupo and G.nodes[vizinho]['grupo'] != G.nodes[barra]['grupo']): 
+                    barras_de_fronteira.append([vizinho,G.nodes[vizinho]['grupo']])
 
-    barra_trocada = rd.choice(barras_de_fronteira)
-    return barra_trocada
+    barra_trocada_e_grupo = rd.choice(barras_de_fronteira)
+    return barra_trocada_e_grupo
 
 def testar_conectividade_do_grupo(G,grupo):
     Gmaior = G.copy()

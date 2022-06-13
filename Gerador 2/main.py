@@ -19,18 +19,18 @@ nome_top = 'ieee-'+str(num_barras) + '-bus.txt'
 rede = Rede(num_barras)
 
 barras_preferidas = []
-#barras_excluidas = []
-barras_excluidas = [2,3,4,6,7,8,11, 117,14, 13, 33, 16, 18,19, 20, 29, 31, 10, 27, 13, 114,26, 25,22 ]
-#barras_excluidas = [113, 17,15, 20, 23, 72, 39, 40, 33, 35, 34, 43, 38, 70, 75, 66, 116, 47, 45, 48, 50, 53, 56, 59]
+#barras_excluidas  = []
+#barras_excluidas = [2,3,4,6,7,8,11, 117,14, 13, 33, 16, 18,19, 20, 29, 31, 10, 27, 13, 114,26, 25,22 ]
+barras_excluidas = [113, 17,15, 20, 23, 72, 39, 40, 33, 35, 34, 43, 38, 70, 75, 66, 116, 47, 45, 48, 50, 53, 56, 59]
 
 gera_plano_concentrado(rede,redun_min, barras_preferidas,barras_excluidas)
-#rede=gera_plano_UM_completa(rede,redun_min,5)
 print(calcula_redundancia(rede.num_medidas,rede.num_barras,rede.max_med))
 
-# G = montar_multigrafo_do_plano_medidas(rede)
-# exibir_multigrafo_de_peso_de_medidas(G,rede.coordenadas)
+
+#G=montar_multigrafo_do_plano_medidas(rede)
 G=montar_grafo_da_topologia(rede)
-exibir_grafo_de_peso_de_medidas(G,rede.coordenadas)
+G.coordenadas = rede.coordenadas
+exibir_grafo_de_peso_de_medidas(G)
 
 rede.plano_med = remove_medidas_desativaddas(rede)
 
@@ -39,7 +39,8 @@ n_grupos = 3
 n_iter =5
 
 G = segmentar_rede_em_n_grupos_m_vezes(G,n_grupos,n_iter)
-exibir_grafo_de_grupos(G, rede.coordenadas)
+G.coordenadas = rede.coordenadas
+exibir_grafo_de_grupos(G,salvar = True)
 salva_grupos_em_txt(G,n_grupos)
 
 grupos     = cria_lista_de_grupos(G,n_grupos)
@@ -57,9 +58,6 @@ for arquivo in arquivos_na_pasta:
     if arquivo.endswith('.txt') or arquivo.endswith('.png'):
         shutil.move(os.path.join(dir_origem,arquivo), os.path.join(dir_destino,dir_destino))
 
-
-# G = reagrupar(G,grupos)
-# exibir_grafo_de_grupos(G, rede.coordenadas)
 
 
 print('')

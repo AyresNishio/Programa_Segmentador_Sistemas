@@ -22,7 +22,7 @@ def ler_criticalidades(arquivo,k,n_criticalidades):
 def ler_arquivo_criticalidade(nome_arquivo):
     with open(nome_arquivo) as arquivo:
 
-        print(arquivo.readline())
+        arquivo.readline()
 
         n_criticalidades = [0]*5
         lista =[] 
@@ -31,8 +31,8 @@ def ler_arquivo_criticalidade(nome_arquivo):
             lista.append([int(i) for i in Aux.split(';')])
             n_criticalidades[i] = lista[i][1]
 
-        print(arquivo.readline())
-        print(arquivo.readline())
+        arquivo.readline()
+        arquivo.readline()
         
         n_combs = [0]*5
         lista =[] 

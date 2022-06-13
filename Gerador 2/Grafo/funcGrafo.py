@@ -118,8 +118,8 @@ def exibir_multigrafo_de_peso_de_medidas(Grafo, coordenadas):
     plt.savefig('fig '+str(len(Grafo.nodes))+'b'+str(sum(lista_num_med))+'m.png')
     plt.show()
 
-def exibir_grafo_de_peso_de_medidas(Grafo,coordenadas):
-
+def exibir_grafo_de_peso_de_medidas(Grafo):
+    coordenadas = Grafo.coordenadas
     lista_num_barras =  {x: x for x in Grafo.nodes}
     lista_num_med = []
     for barra in lista_num_barras: lista_num_med.append(Grafo.nodes[barra]['medidas'])
@@ -143,8 +143,8 @@ def exibir_grafo_de_peso_de_medidas(Grafo,coordenadas):
     plt.savefig('fig '+str(len(Grafo.nodes))+'b'+str(sum(lista_num_med))+'m.png')
     plt.show() # display
 
-def exibir_grafo_de_grupos(Grafo,coordenadas):
-
+def exibir_grafo_de_grupos(Grafo,salvar =False):
+    coordenadas = Grafo.coordenadas
     numeros_das_barras = {x: x for x in Grafo.nodes}
 
     #Cria grupo com elementos únicos
@@ -157,7 +157,9 @@ def exibir_grafo_de_grupos(Grafo,coordenadas):
     nx.draw_networkx_nodes(Grafo, coordenadas, node_size = 300, node_color=cores, alpha=1, node_shape='o')
     nx.draw_networkx_edges(Grafo, coordenadas, edge_color = 'black')
 
-    plt.savefig('fig grupos '+str(len(Grafo.nodes))+'b'+str(sum(Grafo.pesos))+str(Grafo.pesos)+'m.png')
+
+    if(salvar):
+        plt.savefig('fig grupos.png')
     plt.show()
 
 def salva_grupos_em_txt(G,n_grupos):
