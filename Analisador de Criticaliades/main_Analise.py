@@ -55,7 +55,7 @@ with open('Resultados.txt','w') as f:
 rede = Rede(118)
 
 G = montar_grafo_da_rede(rede)
-Nf_ck = med_plan.C5 - med_plan1.C5 -med_plan2.C5 -med_plan3.C5
+Nf_ck = med_plan.C3 - med_plan1.C3 -med_plan2.C3 -med_plan3.C3
 G_crit = montar_grafo_criticalidades(Nf_ck)
 
 

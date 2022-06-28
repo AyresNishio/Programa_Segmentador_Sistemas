@@ -1,10 +1,12 @@
 
+from turtle import distance
 import networkx as nx
 import random as rd
 
 from numpy import Inf
 
 from Grafo.funcGrafo import exibir_grafo_de_grupos
+from Grafo.funcGrafo import shortest_path_BFS
 
 semente = 5
 
@@ -53,8 +55,9 @@ def identificar_n_folhas_distantes(G,n_grupos):
     while(proximas):
         proximas = False
         for f1 in folhas:
+            distancias = shortest_path_BFS(G,f1)
             for f2 in folhas:
-                if(f1!=f2 and nx.shortest_path_length(G,f1,f2)<diametro/2):
+                if(f1!=f2 and distancias[f2]<diametro/2):
                     proximas = True
         if(proximas):
             folhas = rd.sample(lista_de_folhas, n_grupos)      
@@ -70,13 +73,13 @@ def listar_folhas(T):
     return lista_de_folhas
 
 def agrupar_n_barras(G, folhas):
-    menor_distancia = [Inf]*len(G.nodes)
+    menor_distancia = {n:Inf for n in G.nodes}
     for folha in folhas:
-        lista_de_distancias = nx.shortest_path_length(G,folha)
+        lista_de_distancias = shortest_path_BFS(G,folha)
         for barra in G.nodes:
-            if lista_de_distancias[barra]<menor_distancia[barra-1]:
+            if lista_de_distancias[barra]<menor_distancia[barra]:
                     G.nodes[barra]['grupo'] = folhas.index(folha)
-                    menor_distancia[barra-1] = lista_de_distancias[barra]
+                    menor_distancia[barra] = lista_de_distancias[barra]
         
     return G
 

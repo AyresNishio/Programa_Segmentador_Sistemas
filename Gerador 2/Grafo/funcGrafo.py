@@ -221,4 +221,21 @@ def exibir_grafo(Grafo,coordenadas):
     
     plt.title(f'Grafo {len(Grafo.nodes)} medidas')
     plt.show()
+
+def shortest_path_BFS(G,start):
+        visited = {i:False for i in G.nodes}
+        distances  ={i:0 for i in G.nodes}
+        next = []
+        next.append(start)
+        visited[start] = True
+        while(next):
+                n=next[0]
+                next.pop(0)
+                for v in G.neighbors(n):
+                        if(not visited[v]): 
+                                visited[v] = True
+                                next.append(v)
+                                distances[v] = distances[n] + 1
+        #print(distances)
+        return distances
     
