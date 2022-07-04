@@ -64,6 +64,7 @@ def montar_grafo_da_topologia(rede):
             if (i>j)  and (rede.Y_barra[i-1, j-1]) == 1:
                Grafo_da_rede.add_edge(i,j)
 
+    Grafo_da_rede.coordenadas = rede.coordenadas
     return Grafo_da_rede  
 
 def exibir_multigrafo_de_peso_de_medidas(Grafo, coordenadas):
