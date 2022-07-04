@@ -23,7 +23,6 @@ def salva_sub_plano_med(med_plan, grupos):
 
     return sub_planos
 
-
 def monta_sub_med_plan(med, n, G):
     sub_med_plan =  []
     
