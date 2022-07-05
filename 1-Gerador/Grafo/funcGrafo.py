@@ -5,6 +5,8 @@ import networkx as nx
 
 from itertools import count
 
+from sklearn import neighbors
+
 def montar_multigrafo_do_plano_medidas(rede):
     Grafo_da_rede = nx.MultiGraph()
 
@@ -56,7 +58,7 @@ def montar_grafo_da_topologia(rede):
 
     #Nós do Grafo
     for barra in range(1,rede.num_barras+1):
-        Grafo_da_rede.add_node(barra,grupo = 0,medidas = num_meds_na_barra[barra])
+        Grafo_da_rede.add_node(barra,grupo = 0,medidas = num_meds_na_barra[barra],fronteira = 0)
 
     #Arestas dos grafos
     for i in range(1,rede.num_barras+1):
@@ -161,7 +163,25 @@ def exibir_grafo_de_grupos(Grafo,salvar =False):
     if(salvar):
         plt.savefig('fig grupos.png')
     plt.show()
+def exibir_grafo_de_fronteiras(Grafo,salvar =False):
+    coordenadas = Grafo.coordenadas
+    numeros_das_barras = {x: x for x in Grafo.nodes}
 
+    fronteiras = set(nx.get_node_attributes(Grafo,'fronteira').values())
+    mapping = dict(zip(sorted(fronteiras),count()))
+    cores = [mapping[Grafo.nodes[n]['fronteira']] for n in Grafo.nodes]
+
+    nx.draw_networkx_labels(Grafo, coordenadas, numeros_das_barras, font_size=11, font_color='w', font_family = "Tahoma", font_weight = "normal")
+    nx.draw_networkx_nodes(Grafo, coordenadas, node_size = 300, node_color=cores, alpha=1, node_shape='o')
+    nx.draw_networkx_edges(Grafo, coordenadas, edge_color = 'black')
+
+    
+
+    
+
+    if(salvar):
+        plt.savefig('fig fronteiras.png')
+    plt.show()
 def salva_grupos_em_txt(G,n_grupos):
 
     grupos = cria_lista_de_grupos(G,n_grupos)
@@ -187,6 +207,32 @@ def cria_lista_de_grupos(G,n_grupos):
 
     return grupos
 
+def cria_lista_de_grupos_sobrepostos(G,n_grupos):
+
+    grupos =  [[] for _ in range(n_grupos)]
+    for no in G.nodes:
+        grupo = G.nodes[no]['grupo']  
+        grupos[grupo].append(int(no))
+        for viz in G.neighbors(no):
+            grupo_v = G.nodes[viz]['grupo']
+            if(grupo!= grupo_v): 
+                grupos[grupo].append(int(viz))
+                G.nodes[no]['fronteira']=max(grupo,grupo_v)*10 + min(grupo,grupo_v)
+            else:
+                G.nodes[no]['fronteira']=grupo
+        
+    return grupos
+
+def find_border(G):
+    border = []
+    for node in G.nodes():
+        group_from = G.nodes[node]['grupo']
+        for neigh in G.neighbors(node):
+            group_to = G.nodes[neigh]['grupo']
+            if(group_from!= group_to): border.append({node,neigh})
+
+    return border
+        
 
 def monta_grafo_med_nodes(rede):
     Grafo = nx.Graph()

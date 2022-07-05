@@ -1,5 +1,4 @@
 
-from turtle import distance
 import networkx as nx
 import random as rd
 
@@ -14,7 +13,6 @@ semente = 5
 def segmentar_rede_em_n_grupos_m_vezes(G,n_grupos,vezes):
     menor_dif = Inf
     print('Inicia Segmentação')
-    #melhor_G=nx.Graph()
     for i in range(vezes):
         global semente 
         rd.seed(semente+i)
@@ -39,9 +37,9 @@ def segmentar_rede(G,n_grupos):
     folhas = identificar_n_folhas_distantes(G,n_grupos)
     print(f'folhas: {folhas}')
     G = agrupar_n_barras(G,folhas)
-    exibir_grafo_de_grupos(G)
+    #exibir_grafo_de_grupos(G)
     G = balancear_grafo(G,n_grupos)
-    exibir_grafo_de_grupos(G)
+    #exibir_grafo_de_grupos(G)
     
     return G
 

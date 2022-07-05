@@ -12,7 +12,7 @@ from Segmentador.funcReagrupar import *
 import os
 import shutil
 
-num_barras = 118
+num_barras = 6
 redun_min = .60
 nome_top = 'ieee-'+str(num_barras) + '-bus.txt'
 
@@ -35,16 +35,20 @@ exibir_grafo_de_peso_de_medidas(G)
 rede.plano_med = remove_medidas_desativaddas(rede)
 
 salva_Caso(rede)
-n_grupos = 3
+n_grupos = 2
 n_iter =5
 
 G = segmentar_rede_em_n_grupos_m_vezes(G,n_grupos,n_iter)
 G.coordenadas = rede.coordenadas
-exibir_grafo_de_grupos(G,salvar = True)
-salva_grupos_em_txt(G,n_grupos)
 
-grupos     = cria_lista_de_grupos(G,n_grupos)
-sub_planos = salva_sub_plano_med(rede.plano_med,grupos)
+
+#grupos     = cria_lista_de_grupos(G,n_grupos)
+grupos     = cria_lista_de_grupos_sobrepostos(G,n_grupos)
+
+exibir_grafo_de_grupos(G,salvar=True)
+exibir_grafo_de_fronteiras(G,salvar = True)
+salva_grupos_em_txt(G,n_grupos)
+sub_planos = salva_sub_plano_med(rede,grupos)
 salva_sub_covariancia(rede.E,sub_planos)
 
 # Arruma diretórios

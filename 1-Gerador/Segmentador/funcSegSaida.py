@@ -2,15 +2,13 @@ import numpy as np
 
 
 
-def salva_sub_plano_med(med_plan, grupos):
-
-    med_aux = med_plan.copy()
+def salva_sub_plano_med(rede, grupos):
 
     sub_planos = []
 
     for i in range(len(grupos)):
         
-        sub_med_plan = monta_sub_med_plan(med_aux, i+1,grupos[i])
+        sub_med_plan = monta_sub_med_plan(rede,grupos[i])
         n_med= len(sub_med_plan)
         dados_caso = [n_med]
 
@@ -23,13 +21,18 @@ def salva_sub_plano_med(med_plan, grupos):
 
     return sub_planos
 
-
-def monta_sub_med_plan(med, n, G):
+def monta_sub_med_plan(rede,grupo):
+    med = rede.plano_med
     sub_med_plan =  []
+
     
     for medida in med:
-        if medida[1] in G or medida[2] in G:
+        if medida[1] in grupo or medida[2] in grupo:
             sub_med_plan.append(medida)
+
+
+    
+
     
     return sub_med_plan
 
