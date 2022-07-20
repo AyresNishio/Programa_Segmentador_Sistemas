@@ -69,6 +69,7 @@ def montar_grafo_da_topologia(rede):
     return Grafo_da_rede  
 
 def exibir_multigrafo_de_peso_de_medidas(Grafo, coordenadas):
+    
     lista_num_barras =  {x: x for x in Grafo.nodes}
     lista_num_med = []
     for barra in lista_num_barras: lista_num_med.append(Grafo.nodes[barra]['medidas'])
@@ -76,17 +77,14 @@ def exibir_multigrafo_de_peso_de_medidas(Grafo, coordenadas):
     maior_cor = max(lista_num_med)
     menor_cor = min(lista_num_med)
     for barra in Grafo.nodes: # define a cor pelo grau do nó 
-        if lista_num_med[barra-1] - menor_cor > ((maior_cor-menor_cor) / 2):
-            nx.draw_networkx_labels(Grafo, coordenadas,{barra : barra}, font_size=7, font_color='w')
-        else:
-            nx.draw_networkx_labels(Grafo, coordenadas, {barra : barra}, font_size=7, font_color='k')
+        nx.draw_networkx_labels(Grafo, coordenadas, {barra : barra}, font_size=7, font_color='k')
 
-    nx.draw_networkx(Grafo,coordenadas, node_size = 150 ,with_labels = False, labels = lista_num_barras , node_color = lista_num_med,node_shape ='o', width = 0.5, font_size = 0.5, cmap = plt.get_cmap('Oranges'), vmin = menor_cor, vmax = maior_cor)
+    nx.draw_networkx(Grafo,coordenadas, node_size = 150 ,with_labels = False, labels = lista_num_barras , node_color = 'w',node_shape ='o', width = 0.5, font_size = 0.5, cmap = plt.get_cmap('Oranges'), vmin = menor_cor, vmax = maior_cor)
 
-    sm = plt.cm.ScalarMappable(cmap=plt.get_cmap('Oranges'),norm=plt.Normalize(vmin = menor_cor, vmax = maior_cor))
-    sm._A = []
-    sm.set_array(list(range(menor_cor, maior_cor + 1)))
-    plt.colorbar(sm, ticks = range(menor_cor, maior_cor + 1))
+    # sm = plt.cm.ScalarMappable(cmap=plt.get_cmap('Oranges'),norm=plt.Normalize(vmin = menor_cor, vmax = maior_cor))
+    # sm._A = []
+    # sm.set_array(list(range(menor_cor, maior_cor + 1)))
+    # plt.colorbar(sm, ticks = range(menor_cor, maior_cor + 1))
     plt.gca().set_facecolor('paleturquoise')
 
     ax = plt.gca()

@@ -26,13 +26,18 @@ barras_excluidas  = []
 gera_plano_concentrado(rede,redun_min, barras_preferidas,barras_excluidas)
 print(calcula_redundancia(rede.num_medidas,rede.num_barras,rede.max_med))
 
-
-#G=montar_multigrafo_do_plano_medidas(rede)
+rede.plano_med = remove_medidas_desativaddas(rede)
+G=montar_multigrafo_do_plano_medidas(rede)
+exibir_multigrafo_de_peso_de_medidas(G,rede.coordenadas)
 G=montar_grafo_da_topologia(rede)
 G.coordenadas = rede.coordenadas
 exibir_grafo_de_peso_de_medidas(G)
 
-rede.plano_med = remove_medidas_desativaddas(rede)
+G=monta_grafo_med_nodes(rede)
+G.coordenadas = nx.circular_layout(G)
+exibir_grafo_de_peso_de_medidas(G)
+
+
 
 salva_Caso(rede)
 n_grupos = 2
