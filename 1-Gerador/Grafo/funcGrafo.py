@@ -118,7 +118,7 @@ def exibir_multigrafo_de_peso_de_medidas(Grafo, coordenadas):
     plt.savefig('fig '+str(len(Grafo.nodes))+'b'+str(sum(lista_num_med))+'m.png')
     plt.show()
 
-def exibir_grafo_de_peso_de_medidas(Grafo):
+def exibir_grafo_de_peso_de_medidas(Grafo,salvar):
     coordenadas = Grafo.coordenadas
     lista_num_barras =  {x: x for x in Grafo.nodes}
     lista_num_med = []
@@ -140,7 +140,7 @@ def exibir_grafo_de_peso_de_medidas(Grafo):
     plt.colorbar(sm, ticks = range(menor_cor, maior_cor + 1))
     plt.gca().set_facecolor('paleturquoise')
     # plt.colorbar(sm)
-    plt.savefig('fig '+str(len(Grafo.nodes))+'b'+str(sum(lista_num_med))+'m.png')
+    if salvar : plt.savefig('fig '+str(len(Grafo.nodes))+'b'+str(sum(lista_num_med))+'m.png')
     plt.show() # display
 
 def exibir_grafo_de_grupos(Grafo,salvar =False):
@@ -161,6 +161,32 @@ def exibir_grafo_de_grupos(Grafo,salvar =False):
     if(salvar):
         plt.savefig('fig grupos.png')
     plt.show()
+
+def exibir_grafo_de_estados(Grafo, salvar =False):
+    
+    coordenadas =Grafo.coordenadas
+    nome_das_medidas = {x: Grafo.nodes[x]['medida'] for x in Grafo.nodes}
+    
+
+    nx.draw_networkx_labels(Grafo, coordenadas, nome_das_medidas, font_size=11, font_color='w', font_family = "Tahoma", font_weight = "normal")
+    nx.draw_networkx_nodes(Grafo, coordenadas, node_size = 500, node_color='b', alpha=1, node_shape='o')
+    nx.draw_networkx_edges(Grafo, coordenadas, edge_color = 'black')
+
+    if(salvar):
+        plt.savefig('fig estados.png')
+
+    plt.gca().set_facecolor('paleturquoise')
+    plt.show()
+
+def exibir_grafo(Grafo, coordenadas):
+    numeros_das_barras = {x: x for x in Grafo.nodes}
+
+    nx.draw_networkx_labels(Grafo, coordenadas, numeros_das_barras, font_size=11, font_color='w', font_family = "Tahoma", font_weight = "normal")
+    nx.draw_networkx_nodes(Grafo, coordenadas, node_size = 300, node_color='b', alpha=1, node_shape='o')
+    nx.draw_networkx_edges(Grafo, coordenadas, edge_color = 'black')
+
+
+
 def exibir_grafo_de_fronteiras(Grafo,salvar =False):
     coordenadas = Grafo.coordenadas
     numeros_das_barras = {x: x for x in Grafo.nodes}
@@ -238,9 +264,9 @@ def monta_grafo_med_nodes(rede):
     for medida in rede.plano_med:
         
         if(medida[4] == 2):#Injeção
-            Grafo.add_node(medida[0],grupo = 0,medida = f'I{medida[1]}',medidas = 1)
+            Grafo.add_node(medida[0],grupo = 0,medida = f'P{medida[1]}',medidas = 1)
         if(medida[4] == 1):#Fluxo
-            Grafo.add_node(medida[0],grupo = 0,medida=f'F{medida[1]},{medida[2]}',medidas =1)
+            Grafo.add_node(medida[0],grupo = 0,medida=f'P{medida[1]},{medida[2]}',medidas =1)
 
     for no in Grafo.nodes:
         barra_med1 = rede.plano_med[no-1][1] 
@@ -257,9 +283,9 @@ def monta_grafo_med_nodes(rede):
     return Grafo
 
 def exibir_grafo(Grafo,coordenadas):
-    numero_das_barras =  {x: Grafo.nodes[x]['medida'] for x in Grafo.nodes}
+    numeros_das_barras = {x: x for x in Grafo.nodes}
 
-    nx.draw_networkx_labels(Grafo, coordenadas, numero_das_barras, font_size=11, font_color='r', font_family = "Tahoma", font_weight = "normal")
+    nx.draw_networkx_labels(Grafo, coordenadas, numeros_das_barras, font_size=11, font_color='r', font_family = "Tahoma", font_weight = "normal")
     nx.draw_networkx_nodes(Grafo, coordenadas, node_size = 300, node_color='b', alpha=1, node_shape='o')
     nx.draw_networkx_edges(Grafo, coordenadas, edge_color = 'black')
     

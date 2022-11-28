@@ -4,7 +4,7 @@ import random as rd
 
 from numpy import Inf
 
-from Grafo.funcGrafo import exibir_grafo_de_grupos
+from Grafo.funcGrafo import exibir_grafo_de_grupos,exibir_grafo
 from Grafo.funcGrafo import shortest_path_BFS
 
 semente = 5
@@ -16,7 +16,7 @@ def segmentar_rede_em_n_grupos_m_vezes(G,n_grupos,vezes):
     for i in range(vezes):
         global semente 
         rd.seed(semente+i)
-        G = segmentar_rede(G,n_grupos)
+        G = segmentar_rede(G,n_grupos,i)
         pesos=calcular_pesos(G,n_grupos)
         dif_pesos=calcular_dif_dos_grupos(pesos)
         print(f'[{pesos}] -> {dif_pesos}')
@@ -30,21 +30,23 @@ def segmentar_rede_em_n_grupos_m_vezes(G,n_grupos,vezes):
     melhor_G.pesos = melhores_pesos
     return melhor_G
 
-def segmentar_rede(G,n_grupos):
+def segmentar_rede(G,n_grupos,i):
     
     # Vertices de maior excentricidade são aqueles mais distântes do centro do grafo
-    #Vertices precisam estar distântes entre si para o agrupamento
+    # Vertices precisam estar distântes entre si para o agrupamento
     folhas = identificar_n_folhas_distantes(G,n_grupos)
     print(f'folhas: {folhas}')
     G = agrupar_n_barras(G,folhas)
-    #exibir_grafo_de_grupos(G)
+    if i == 2 : exibir_grafo_de_grupos(G)
     G = balancear_grafo(G,n_grupos)
-    #exibir_grafo_de_grupos(G)
+    if i == 2 : exibir_grafo_de_grupos(G)
     
     return G
 
 def identificar_n_folhas_distantes(G,n_grupos):
     arvore_geradora = nx.minimum_spanning_tree(G)
+    
+    exibir_grafo(arvore_geradora,G.coordenadas)
     lista_de_folhas = listar_folhas(arvore_geradora)
 
     diametro = nx.diameter(G)
