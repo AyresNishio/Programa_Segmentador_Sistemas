@@ -14,10 +14,10 @@ grupo1=ler_grupo(1)
 grupo2=ler_grupo(2)
 grupo3=ler_grupo(3)
 
-med_plan = Criticalidades('Caso118b333mCO2.csv')
-med_plan1= Criticalidades('medplan1_115m.csv')
-med_plan2= Criticalidades('medplan2_123m.csv')
-med_plan3= Criticalidades('medplan3_128m.csv')
+med_plan = Criticalidades('Caso118b333mEQ.csv')
+med_plan1= Criticalidades('medplan1_EQ.csv')
+med_plan2= Criticalidades('medplan2_EQ.csv')
+med_plan3= Criticalidades('medplan3_EQ.csv')
 
 
 

@@ -6,11 +6,11 @@ Cardinalidade;numero de Cks
 5;354
  total de tuplas criticas : 742
 numero de combinacoes analisadas por cardinalidade
-1; 42
-2; 861
-3; 11480
-4; 111930
-5; 850668
+1; 39
+2; 741
+3; 9139
+4; 82251
+5; 575757
 F(20-10) ;29;-;-;-;-;1 
 F(11-9) ;22;-;-;-;-;1 
 F(10-17) ;21;-;-;-;-;1 
