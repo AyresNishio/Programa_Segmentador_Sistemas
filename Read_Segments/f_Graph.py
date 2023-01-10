@@ -6,6 +6,7 @@ def build_measurement_dist_graph(bus_sys,meas_plan):
 
     Dg = nx.Graph()
     Dg.coordinates = bus_sys.coordinates
+    
     #Dicionario que relaciona as barras com a qtde de meas_plan associadas a ela
     n_meas_in_bus = {}
     for i in range(bus_sys.n_bus):
@@ -28,8 +29,7 @@ def build_measurement_dist_graph(bus_sys,meas_plan):
 
  
 
-def show_measurement_dist_graph(Dg, save=0):
-    coordinates = Dg.coordinates
+def show_measurement_dist_graph(Dg,coordinates, save=0):
     list_bus_numbers =  {x: x for x in Dg.nodes}
     list_meas_per_bus = []
     for bus in list_bus_numbers: list_meas_per_bus.append(Dg.nodes[bus]['n_meas'])
@@ -53,8 +53,7 @@ def show_measurement_dist_graph(Dg, save=0):
     if save : plt.savefig('Distribution Graph '+str(len(Dg.nodes))+'b'+str(sum(list_meas_per_bus))+'m.png')
     plt.show() # display
 
-def show_groups(Graph, save=False):
-    coordinates = Graph.coordinates
+def show_groups(Graph,coordinates, save=False):
     bus_numbers = {x: x for x in Graph.nodes}
 
     #Cria grupo com elementos únicos
