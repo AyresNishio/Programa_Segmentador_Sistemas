@@ -206,6 +206,7 @@ def exibir_grafo_de_fronteiras(Grafo,salvar =False):
     if(salvar):
         plt.savefig('fig fronteiras.png')
     plt.show()
+
 def salva_grupos_em_txt(G,n_grupos):
 
     grupos = cria_lista_de_grupos(G,n_grupos)

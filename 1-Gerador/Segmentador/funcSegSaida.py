@@ -30,10 +30,6 @@ def monta_sub_med_plan(rede,grupo):
         if medida[1] in grupo or medida[2] in grupo:
             sub_med_plan.append(medida)
 
-
-    
-
-    
     return sub_med_plan
 
 def salva_sub_covariancia(E,planos_med):

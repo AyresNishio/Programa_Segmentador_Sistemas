@@ -27,7 +27,6 @@ def build_measurement_dist_graph(bus_sys,meas_plan):
 
     return Dg 
 
- 
 
 def show_measurement_dist_graph(Dg,coordinates, save=0):
     list_bus_numbers =  {x: x for x in Dg.nodes}
@@ -53,6 +52,15 @@ def show_measurement_dist_graph(Dg,coordinates, save=0):
     if save : plt.savefig('Distribution Graph '+str(len(Dg.nodes))+'b'+str(sum(list_meas_per_bus))+'m.png')
     plt.show() # display
 
+def set_groups(Dg,groups):
+    n_group = 1
+    for group in groups:
+        for node in group: 
+            Dg.nodes[node]['group'] = n_group
+        n_group+=1
+
+
+
 def show_groups(Graph,coordinates, save=False):
     bus_numbers = {x: x for x in Graph.nodes}
 
@@ -70,6 +78,31 @@ def show_groups(Graph,coordinates, save=False):
         plt.savefig('fig grupos.png')
 
     plt.show() 
+
+def show_border_nodes(Graph,coordinates,save=False):
+    bus_numbers = {x: x for x in Graph.nodes}
+
+    border_nodes = find_border_nodes(Graph)
+
+    #Cria grupo com elementos únicos
+    groups = set(nx.get_node_attributes(Graph,'group').values())
+    #Cria Dicionário de Cores para cada grupo
+    mapping = dict(zip(sorted(groups),count()))
+    colors = [mapping[Graph.nodes[n]['group']] for n in Graph.nodes]
+    for node in border_nodes:
+        colors[node-1] = len(mapping)
+    nx.draw_networkx_labels(Graph, coordinates, bus_numbers, font_size=11, font_color='w', font_family = "Tahoma", font_weight = "normal")
+    nx.draw_networkx_nodes(Graph, coordinates, node_size = 300, node_color=colors, alpha=1, node_shape='o')
+    nx.draw_networkx_edges(Graph, coordinates, edge_color = 'black')
+
+
+
+    if save:
+        plt.savefig('fig grupos.png')
+
+    plt.show()
+
+
 
 def shortest_path_BFS(G,start):
         visited = {i:False for i in G.nodes}
@@ -96,6 +129,55 @@ def get_measurements_in_group(G):
         n_meas_in_group[grupo] = n_meas_in_group[grupo]+G.nodes[bus]['n_meas']
 
     return n_meas_in_group
+
+def regroup_outliners(Graph):
+    Copy_Graph=Graph.copy()
+    Copy_Graph.coordinates=Graph.coordinates
+    border_nodes =  find_border_nodes(Graph)
+    for border_node in border_nodes:
+        shortest_paths=shortest_path_BFS(Graph,border_node)
+        groups=set(nx.get_node_attributes(Graph,'group').values())
+        dist_to_group={i:0 for i in groups}
+        size_of_group={i:0 for i in groups}
+
+        for node in Graph.nodes:
+            group=Graph.nodes[node]['group']
+            dist_to_group[group] += shortest_paths[node]
+            size_of_group[group] += 1
+
+        for group in dist_to_group:
+            dist_to_group[group] = dist_to_group[group]/size_of_group[group]
+
+        closest_distance=min(dist_to_group.values())
+        closest_group = min(dist_to_group, key=dist_to_group.get)
+        #if closest_distance<4:
+        Copy_Graph.nodes[border_node]['group'] = closest_group
+
+    return Copy_Graph
+
+def find_border_nodes(G):
+    border = set()
+    for node in G.nodes():
+        group_from = G.nodes[node]['group']
+        for neigh in G.neighbors(node):
+            group_to = G.nodes[neigh]['group']
+            if(group_from!= group_to): border.add(node)
+
+    return border
+
+def build_sub_graph_of_group(Graph,group):
+    sub_graph =nx.Graph()
+
+    for node in Graph.nodes():
+        if (Graph.nodes[node]['group'] == group):
+            sub_graph.add_node(node,group=group) 
+
+    for i,j in Graph.edges():    
+        if (Graph.nodes[i]['group'] == group) and (Graph.nodes[j]['group'] == group):
+            sub_graph.add_edge(i,j)
+
+    return sub_graph
+
 
 # def get_obj_func(n_meas_in_group):
 #     objective = 0 
